@@ -8,6 +8,6 @@ export default defineConfig({
     manifest: true,
   },
 
-  base: "https://southern-discoveries.github.io/todo-vanilla/",
-  // publicDir: "assets",
+  // base: "https://southern-discoveries.github.io/todo-vanilla/",
+  base: "todo-vanilla/",
 });
