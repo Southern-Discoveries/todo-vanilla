@@ -28,7 +28,7 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          dir: /dist
+          path: ./dist
 
   # Deployment job
   deploy:
