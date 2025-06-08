@@ -25,7 +25,7 @@ jobs:
           npm run build  # Adjust based on your framework (vite, next, etc.)
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist # or ./build depending on your tool
 
