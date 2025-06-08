@@ -1,13 +1,14 @@
 import express from "express";
 import userRouter from "./routes/userRouter";
 import todoRouter from "./routes/todoRouter";
+import cors from "cors";
 
 const app = express();
 const port = 3000;
 
 // use that can be get params/body
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Routes
 app.use("/user", userRouter);
