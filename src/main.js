@@ -1,4 +1,5 @@
 import $ from "jquery";
+import "./middleware";
 
 $(function () {
   let count = 0;

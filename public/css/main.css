@@ -5,3 +5,16 @@
   font-family: "Lexend", sans-serif;
   /* color: white; */
 }
+
+button {
+  cursor: pointer;
+
+  &:disabled {
+    cursor: no-drop;
+  }
+}
+
+
+body {
+  background-color: #212429;
+}
