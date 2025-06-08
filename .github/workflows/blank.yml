@@ -27,8 +27,8 @@ jobs:
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
-        # with:
-        #   publish_dir: dist
+        with:
+          dir: dist/assets
 
   # Deployment job
   deploy:
