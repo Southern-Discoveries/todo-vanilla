@@ -8,6 +8,6 @@ export default defineConfig({
     manifest: true,
   },
 
-  base: "https://southern-discoveries.github.io/",
+  base: "https://southern-discoveries.github.io/dist/",
   // publicDir: "assets",
 });
