@@ -1,16 +1,19 @@
 (async function () {
-  // const req = await fetch("http://localhost:3000/user/register?son=1", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     username: "1",
-  //     password: "123",
-  //   }),
-  // });
+  const getURL = new URL(`https://todo-vanilla-sb13.onrender.com`);
+  // const getURL = new URL(`http://localhost:3000`);
 
-  // const req = await fetch("http://localhost:3000/user/profile/synasapmob", {
+  const req = await fetch(`${getURL.toString()}user/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: "synasapmob",
+      password: "123",
+    }),
+  });
+
+  // const req = await fetch(`${getURL.toString()}user/profile/synasapmob`, {
   //   method: "GET",
   // });
 
@@ -37,15 +40,15 @@
   //   method: "DELETE",
   // });
 
-  const req = await fetch("http://localhost:3000/todo/reset", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      creator: "alexpham",
-    }),
-  });
+  // const req = await fetch("http://localhost:3000/todo/reset", {
+  //   method: "DELETE",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     creator: "alexpham",
+  //   }),
+  // });
 
   const json = await req.json();
 

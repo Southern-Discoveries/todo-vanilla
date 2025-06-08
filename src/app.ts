@@ -13,6 +13,10 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/todo", todoRouter);
 
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
+
 // watch
 app.listen(port, () => {
   console.clear();
