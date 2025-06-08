@@ -3,4 +3,10 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [tailwindcss()],
+
+  build: {
+    manifest: true,
+  },
+
+  publicDir: "assets",
 });
