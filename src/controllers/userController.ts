@@ -50,8 +50,6 @@ export default {
 
       if (isOmit?.length) throw `required field ${isOmit}`;
 
-      await userModels.createUser(params as NonNullable<typeof params>);
-
       const data = await userModels.login(params as NonNullable<typeof params>);
 
       res.send(data);
