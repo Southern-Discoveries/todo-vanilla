@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "dependencies": {
+    "jquery": "^3.7.1",
+    "tailwindcss": "^4.1.8",
+    "vite": "^6.3.5"
+  },
+  "scripts": {
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.8",
+    "@types/node": "^22.15.29"
+  }
+}

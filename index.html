@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+    <script type="module" src="main.js"></script>
+</head>
+
+<body class="bg-[#212429]">
+    <div class="p-4 flex flex-col gap-4">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center">
+            <div class="flex flex-col gap-0.25">
+                <p class="font-light text-[#9EA0A8] text-[14px]">Welcome</p>
+                <h3 class="font-medium text-white text-[18px]">Thanh Tung</h3>
+            </div>
+            <img src="Icon/User.svg" class="w-[40px h-[40px]">
+        </div>
+
+        <!-- Create todo list -->
+        <div class="flex flex-col gap-2">
+            <input id="myInput"
+                class="w-full h-12 bg-[#0F1012] pl-3 border-[#313439] border-2 rounded-[12px] placeholder-[#55565B] text-white"
+                type="text" placeholder=" Enter Task">
+            <!-- Button section -->
+            <div class="w-full h-12 flex gap-2 items-center">
+                <button id="createBtn" type="submit" class="w-full h-12 text-white bg-[#3EB08F] rounded-xl opacity-35"
+                    disabled>+
+                    Create</button>
+                <button id="resetBtn" type="submit"
+                    class="w-full h-12 text-white bg-[#313439] rounded-xl">Reset</button>
+            </div>
+        </div>
+
+        <!-- Your todo list -->
+        <div class="flex flex-col gap-2">
+            <div class="flex justify-between items-center">
+                <p class="text-white text-[14px]">Your list</p>
+                <p id="countList" class="text-[#3EB08F] text-[16px]">0</p>
+            </div>
+            <ul id="cardContainer" class="flex flex-col gap-2">
+            </ul>
+            <!-- Todo card -->
+            <!-- <div class="flex justify-between items-center p-4 bg-[#313439] rounded-[12px]">
+                <div class="flex flex-col gap-0.25">
+                    <h6 class="text-[12px] font-light text-[#9EA0A8]">Thu 5 Jun, 2025</h6>
+                    <p class="text-[16px] font-normal text-white">Reading Book 15 minutes</p>
+                </div>
+                <input type="checkbox" class=" h-5 w-5 cursor-pointer bg-[#313439] accent-[#3EB08F]">
+            </div> -->
+        </div>
+    </div>
+</body>
+
+</html>
