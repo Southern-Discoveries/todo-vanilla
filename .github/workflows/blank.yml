@@ -1,0 +1,39 @@
+# This is a basic workflow to help you get started with Actions
+
+on:
+  push:
+    branches:
+      - backend
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build static files
+        id: build
+        run: |
+          npm install
+          npm run build
+
+  # Deployment job
+  deploy:
+    - name: Deploy to render.com
+      run: |
+        curl --request POST \
+        --url https://api.render.com/v1/services/srv-d12jjiumcj7s73fe6mq0/deploys \
+        --header 'accept: application/json' \
+        --header 'authorization: Bearer rnd_MSoG1qlumYjixYVmcWlfPbzCciy3' \
+        --header 'content-type: application/json' \
+        --data '
+        {
+          "clearCache": "clear"
+        }
