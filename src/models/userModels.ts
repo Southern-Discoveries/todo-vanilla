@@ -1,6 +1,7 @@
 import { TypeUserCreateProps, TypeUserGetProps } from "../types/user";
 import utilsConstants from "../utils/utils.constants";
 import clientPG from "../utils/utils.pg";
+import bcrypt from "bcrypt";
 
 export default {
   getUser: async (id: string) => {
@@ -18,7 +19,7 @@ export default {
     try {
       await clientPG.query(
         `INSERT INTO public.user(username, password) VALUES ($1, $2)`,
-        [params.username, params.password]
+        [params.username, bcrypt.hashSync(params.password, 10)]
       );
     } catch (error: any) {
       const catchByCode = utilsConstants.ERROR_PG?.[error?.code as never];
@@ -39,7 +40,7 @@ export default {
       throw "the account is not already existed";
     }
 
-    if (result.rows[0].password !== params.password) {
+    if (!bcrypt.compareSync(params.password, result.rows[0].password)) {
       throw "the password incorrect, please check again";
     }
 
