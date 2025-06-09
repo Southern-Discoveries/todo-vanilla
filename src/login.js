@@ -1,22 +1,33 @@
 import $ from "jquery";
 import utilsConstants from "../utils/utils.constants";
 import "./middleware";
+import spiner from "./components/spiner";
+import { catchProperties } from "../utils";
 
 $.ready(
   (function () {
-    const queryInput = $(".login-input");
+    const inputText = $(".login-input");
     const btnSignup = $("#login-signup");
+    const inputError = $("#login-input-error");
 
     // handler input
-    queryInput.on("input", () => {
-      for (const element of queryInput) {
-        if (element.value.length) {
-          btnSignup.removeAttr("disabled");
-        } else {
-          btnSignup.attr("disabled", true);
+    {
+      inputText.on("keypress", (event) => {
+        if (event.key === "Enter") {
+          $("#login-signup").trigger("click");
         }
-      }
-    });
+      });
+
+      inputText.on("input", () => {
+        for (const element of inputText) {
+          if (element.value.length) {
+            btnSignup.removeAttr("disabled");
+          } else {
+            btnSignup.attr("disabled", true);
+          }
+        }
+      });
+    }
 
     // handler signup
     {
@@ -26,7 +37,17 @@ $.ready(
       // should login
       $("#login-signup").on("click", async () => {
         try {
-          const [username, password] = queryInput;
+          inputError.attr("hidden", "true");
+          btnSignup.html(spiner({ class: "m-auto" }));
+
+          const [username, password] = inputText;
+
+          const isOmit = catchProperties({
+            username: !username?.value,
+            password: !password?.value,
+          });
+
+          if (isOmit?.length) throw `required field ${isOmit}`;
 
           const request = await fetch(`${utilsConstants.GET_API}/user/login`, {
             method: "POST",
@@ -46,9 +67,8 @@ $.ready(
           localStorage.setItem(utilsConstants.STORAGE_ACCOUNT, json.username);
           window.location = `/${utilsConstants.BASE_PATH}`;
         } catch (error) {
-          console.log("error", error);
-
-          alert(JSON.stringify(error));
+          inputError.removeAttr("hidden").text(error);
+          btnSignup.text("Sign up");
         }
       });
     }
