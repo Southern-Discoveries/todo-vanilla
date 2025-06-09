@@ -24,16 +24,16 @@ jobs:
           npm install
           npm run build
 
+      - name: Deploy to render
+        run: |
+          curl --request POST \
+              --url https://api.render.com/v1/services/srv-d12jjiumcj7s73fe6mq0/deploys \
+              --header 'accept: application/json' \
+              --header 'authorization: Bearer rnd_MSoG1qlumYjixYVmcWlfPbzCciy3' \
+              --header 'content-type: application/json' \
+              --data '
+              {
+                "clearCache": "clear"
+              }
+          '
   # Deployment job
-  deploy:
-    - name: Deploy to render.com
-      run: |
-        curl --request POST \
-        --url https://api.render.com/v1/services/srv-d12jjiumcj7s73fe6mq0/deploys \
-        --header 'accept: application/json' \
-        --header 'authorization: Bearer rnd_MSoG1qlumYjixYVmcWlfPbzCciy3' \
-        --header 'content-type: application/json' \
-        --data '
-        {
-          "clearCache": "clear"
-        }
