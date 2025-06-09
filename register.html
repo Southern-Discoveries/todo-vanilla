@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="public/css/main.css">
+  <link rel="stylesheet" href="public/css/login.css">
+  <script type="module" src="src/register.js"></script>
+
+</head>
+
+<body>
+  <div class="container-2xl mx-auto h-dvh flex items-center">
+    <div class="bg-white w-lg mx-auto p-4 rounded-sm flex flex-col gap-10">
+      <!-- header -->
+      <div>
+        <p class="text-md text-neutral-500">let's start register one account</p>
+        <h2 class="text-2xl text-black font-semibold">Welcome back</h2>
+      </div>
+
+      <!-- form -->
+      <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-4">
+          <input id="login-input-username" class="login-input" type="text" placeholder="Enter username" />
+
+          <input id="login-input-password login-input-passsword-confirm" class="login-input pr-10!" type="password"
+            placeholder="Enter password" />
+
+          <input id="login-input-password" class="login-input" type="password" placeholder="Confirm password" />
+
+          <p id="login-input-error" class="text-xs font-semibold text-red-400" hidden></p>
+        </div>
+
+        <p class="text-blue-400 font-medium underline text-end">forget password</p>
+      </div>
+
+      <!-- action -->
+      <div class="flex flex-col gap-2">
+        <button id="login-signup"
+          class="text-white  bg-blue-600 w-full p-2 h-10 rounded-lg duration-200 hover:opacity-80 disabled:opacity-35">Sign
+          up</button>
+
+        <p class="text-center">You have an account? <span class="text-blue-400 underline">
+            <a href="/login.html">Sign in</a>
+          </span></p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
