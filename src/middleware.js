@@ -3,11 +3,23 @@ import utilsConstants from "../utils/utils.constants";
 
 $.ready(
   (function () {
-    // authentication
     const getAccount = localStorage.getItem(utilsConstants.STORAGE_ACCOUNT);
+    const isLoggedPage = location.pathname === "/login";
 
-    if (!getAccount?.length) {
-      window.location = "/login";
+    // handler you're logged or not?
+    {
+      if (!getAccount?.length && !isLoggedPage) {
+        window.location = `${utilsConstants.BASE_PATH}/login`;
+      }
+
+      if (getAccount?.length && isLoggedPage) {
+        window.location = `/${utilsConstants.BASE_PATH}`;
+      }
+    }
+
+    // handler expires login
+    {
+      // ... E.g
     }
   })()
 );

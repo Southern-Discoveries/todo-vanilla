@@ -1,15 +1,9 @@
 import $ from "jquery";
 import utilsConstants from "../utils/utils.constants";
+import "./middleware";
 
 $.ready(
   (function () {
-    // logged but trying to join this page
-    if (localStorage.getItem(utilsConstants.STORAGE_ACCOUNT)) {
-      window.location = "/";
-
-      return;
-    }
-
     const queryInput = $(".login-input");
     const btnSignup = $("#login-signup");
 
@@ -50,7 +44,7 @@ $.ready(
           if (json?.statusText) throw json.statusText;
 
           localStorage.setItem(utilsConstants.STORAGE_ACCOUNT, json.username);
-          window.location = "/";
+          window.location = `/${utilsConstants.BASE_PATH}`;
         } catch (error) {
           console.log("error", error);
 
