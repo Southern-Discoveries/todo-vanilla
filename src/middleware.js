@@ -5,7 +5,9 @@ $.ready(
   (function () {
     const getAccount = localStorage.getItem(utilsConstants.STORAGE_ACCOUNT);
 
-    const isLoggedPage = window.location.href.includes("login");
+    const isLoggedPage =
+      window.location.href.includes("login") ||
+      window.location.href.includes("register");
 
     // handler you're logged or not?
     {
