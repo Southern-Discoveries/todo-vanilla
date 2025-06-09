@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 
 import tailwindcss from "@tailwindcss/vite";
 import { readdirSync } from "fs";
+import utilsConstants from "./utils/utils.constants";
 
 export default defineConfig(({ command }) => {
   return {
@@ -28,6 +29,6 @@ export default defineConfig(({ command }) => {
       })(),
     },
 
-    base: command === "build" ? "todo-vanilla/" : "/",
+    base: command === "build" ? `${utilsConstants.BASE_PATH}/` : "/",
   };
 });
