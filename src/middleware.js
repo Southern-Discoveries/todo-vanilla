@@ -13,7 +13,7 @@ $.ready(
       }
 
       if (getAccount?.length && isLoggedPage) {
-        window.location = `/${utilsConstants.BASE_PATH}`;
+        window.location = `${utilsConstants.BASE_PATH}/`;
       }
     }
 
