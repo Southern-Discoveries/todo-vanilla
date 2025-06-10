@@ -11,12 +11,12 @@ export default defineConfig(({ command }) => {
 
     build: {
       rollupOptions: (function () {
-        const files = readdirSync("./");
+        const parseHTML = (function () {
+          const files = readdirSync("./");
 
-        const pages = files.filter((meta) => meta.endsWith(".html"));
+          const pages = files.filter((meta) => meta.endsWith(".html"));
 
-        return {
-          input: Object.fromEntries(
+          return Object.fromEntries(
             pages
               .map((meta) => {
                 const [name] = meta.split(".");
@@ -24,7 +24,13 @@ export default defineConfig(({ command }) => {
                 return [name, resolve(dirname("./"), meta)];
               })
               .map(([page, path]) => [page, path])
-          ),
+          );
+        })();
+
+        return {
+          input: {
+            ...parseHTML,
+          },
         };
       })(),
     },
