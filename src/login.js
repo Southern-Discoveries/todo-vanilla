@@ -7,22 +7,14 @@ import { catchProperties } from "../utils";
 $.ready(
   (function () {
     const inputText = $(".login-input");
-<<<<<<< HEAD
-    const btnSignup = $("#login-signup");
-=======
     const btnSignup = $("#login-signin");
->>>>>>> 08a543bc2005e81b50b1001a5da08a89d1d35c0d
     const inputError = $("#login-input-error");
 
     // handler input
     {
       inputText.on("keypress", (event) => {
         if (event.key === "Enter") {
-<<<<<<< HEAD
-          $("#login-signup").trigger("click");
-=======
           btnSignup.trigger("click");
->>>>>>> 08a543bc2005e81b50b1001a5da08a89d1d35c0d
         }
       });
 
@@ -76,12 +68,8 @@ $.ready(
           window.location = `/${utilsConstants.BASE_PATH}`;
         } catch (error) {
           inputError.removeAttr("hidden").text(error);
-<<<<<<< HEAD
-          btnSignup.text("Sign up");
-=======
         } finally {
           btnSignup.text("Sign in");
->>>>>>> 08a543bc2005e81b50b1001a5da08a89d1d35c0d
         }
       });
     }
