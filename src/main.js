@@ -14,7 +14,7 @@ $(function () {
     " - " +
     date.getDay() +
     "/" +
-    date.getMonth() +
+    (date.getMonth() + 1) +
     "/" +
     date.getFullYear();
 
@@ -31,7 +31,8 @@ $(function () {
                                 <h6 class="text-[12px] font-light text-[#9EA0A8]">${dateUpdate}</h6>
                             </div>
                             </div>
-                            <img src="Icon/Trash.png" alt="Trash" class="w-6 h-6 rounded-[4px]">
+                            <img src="Icon/Trash.svg" alt="Trash" class="w-6 h-6 rounded-[4px]">
+                            <img src="Icon/Edit.svg" alt="Trash" class="w-6 h-6 rounded-[4px]">
                         </li>
                 `;
       $("#cardContainer").html(todoCard);
@@ -63,8 +64,4 @@ $(function () {
     $("#createBtn").prop("disabled", true).css("opacity", "0.35");
   });
   //Checkbox State
-
-  //   removeBtn.on("click", () => {
-  //     console.log("Hello Guys");
-  //   });
 });
