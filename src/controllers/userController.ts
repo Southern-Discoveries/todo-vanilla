@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { catchProperties } from "../utils";
 import userModels from "../models/userModels";
-import { TypeUserCreateProps } from "../types/user";
+import { TypeUserCreateProps, TypeUserEditProps } from "../types/user";
 
 export default {
   getUser: async (req: Request, res: Response) => {
@@ -55,6 +55,29 @@ export default {
       res.send(data);
     } catch (error) {
       res.status(400).json({
+        statusText: error,
+      });
+    }
+  },
+
+  editUser: async (req: Request, res: Response) => {
+    try {
+      const params: TypeUserEditProps | undefined = req?.body;
+
+      const isOmit = catchProperties({
+        username: !params?.username,
+        subname: !params?.subname,
+      });
+
+      if (isOmit?.length) throw `required field ${isOmit}`;
+
+      await userModels.editUser(params as NonNullable<typeof params>);
+
+      res.send({
+        statusText: "you edited successfuly",
+      });
+    } catch (error) {
+      res.status(400).send({
         statusText: error,
       });
     }
