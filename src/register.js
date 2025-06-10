@@ -3,26 +3,19 @@ import utilsConstants from "../utils/utils.constants";
 import "./middleware";
 import spiner from "./components/spiner";
 import { catchProperties } from "../utils";
+import toast from "./components/toast";
 
 $.ready(
   (function () {
     const inputText = $(".login-input");
-<<<<<<< HEAD
     const btnSignup = $("#login-signup");
-=======
-    const btnSignup = $("#login-signin");
->>>>>>> 08a543bc2005e81b50b1001a5da08a89d1d35c0d
     const inputError = $("#login-input-error");
 
     // handler input
     {
       inputText.on("keypress", (event) => {
         if (event.key === "Enter") {
-<<<<<<< HEAD
-          $("#login-signup").trigger("click");
-=======
           btnSignup.trigger("click");
->>>>>>> 08a543bc2005e81b50b1001a5da08a89d1d35c0d
         }
       });
 
@@ -48,40 +41,67 @@ $.ready(
           inputError.attr("hidden", "true");
           btnSignup.html(spiner({ class: "m-auto" }));
 
-          const [username, password] = inputText;
+          const [username, password, password_confirm] = inputText;
 
           const isOmit = catchProperties({
             username: !username?.value,
             password: !password?.value,
+            password_confirm: !password_confirm?.value,
           });
+
+          if (password.value !== password_confirm.value) {
+            throw "password it not matching";
+          }
 
           if (isOmit?.length) throw `required field ${isOmit}`;
 
-          const request = await fetch(`${utilsConstants.GET_API}/user/login`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username: username.value,
-              password: password.value,
-            }),
-          });
+          const request = await fetch(
+            `${utilsConstants.GET_API}/user/register`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: username.value,
+                password: password.value,
+              }),
+            }
+          );
 
           const json = await request.json();
 
           if (request.status !== 200) throw json.statusText;
 
-          localStorage.setItem(utilsConstants.STORAGE_ACCOUNT, json.username);
-          window.location = `/${utilsConstants.BASE_PATH}`;
+          // handler toast
+          {
+            const toast_message = $(
+              toast({
+                id: "register_success",
+                message: json.statusText,
+              })
+            );
+
+            $("body").append(toast_message);
+
+            $("#close-register_success").on("click", () => {
+              toast_message.remove();
+            });
+          }
+
+          // reset form
+          for (const element of inputText) {
+            element.value = "";
+
+            // just focus in username
+            if (element.placeholder.includes("username")) {
+              element.focus();
+            }
+          }
         } catch (error) {
           inputError.removeAttr("hidden").text(error);
-<<<<<<< HEAD
-          btnSignup.text("Sign up");
-=======
         } finally {
-          btnSignup.text("Sign in");
->>>>>>> 08a543bc2005e81b50b1001a5da08a89d1d35c0d
+          btnSignup.text("Sign up");
         }
       });
     }
