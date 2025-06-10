@@ -1,4 +1,9 @@
-import { TypeUserCreateProps, TypeUserGetProps } from "../types/user";
+import {
+  TypeUserCreateProps,
+  TypeUserEditProps,
+  TypeUserGetProps,
+} from "../types/user";
+import { getFieldsByTemplate } from "../utils";
 import utilsConstants from "../utils/utils.constants";
 import clientPG from "../utils/utils.pg";
 import bcrypt from "bcrypt";
@@ -12,14 +17,24 @@ export default {
 
     if (!result.rows[0]) throw "not found this account";
 
-    return result.rows[0];
+    return {
+      username: result.rows[0].username,
+      subname: result.rows[0].subname || result.rows[0].username,
+      avatar: result.rows[0].avatar,
+      createdAt: result.rows[0].createdAt,
+    };
   },
 
   createUser: async (params: TypeUserCreateProps) => {
     try {
       await clientPG.query(
-        `INSERT INTO public.user(username, password) VALUES ($1, $2)`,
-        [params.username, bcrypt.hashSync(params.password, 10)]
+        `INSERT INTO public.user(username, subname, password, "createdAt") VALUES ($1, $2, $3, $4)`,
+        [
+          params.username,
+          params.username,
+          bcrypt.hashSync(params.password, 10),
+          Math.round(Date.now() / 1000),
+        ]
       );
     } catch (error: any) {
       const catchByCode = utilsConstants.ERROR_PG?.[error?.code as never];
@@ -31,7 +46,7 @@ export default {
   },
 
   login: async (params: TypeUserCreateProps) => {
-    const result = await clientPG.query<TypeUserGetProps>(
+    const result = await clientPG.query<TypeUserGetProps & TypeUserCreateProps>(
       `SELECT * FROM public.user WHERE username = $1`,
       [params.username]
     );
@@ -44,6 +59,25 @@ export default {
       throw "the password incorrect, please check again";
     }
 
-    return result.rows[0];
+    return {
+      username: result.rows[0].username,
+      subname: result.rows[0].subname || result.rows[0].username,
+      avatar: result.rows[0].avatar,
+      createdAt: result.rows[0].createdAt,
+    };
+  },
+
+  editUser: async (params: TypeUserEditProps) => {
+    const fields = getFieldsByTemplate(params, ["subname", "avatar"]);
+
+    // // don't change anything
+    if (!fields.length) return;
+
+    const result = await clientPG.query(
+      `UPDATE public.user SET ${fields} WHERE username=$1`,
+      [params.username]
+    );
+
+    if (!result.rowCount) throw "not found this account";
   },
 };

@@ -1,4 +1,5 @@
 import { TypeTodoCreate, TypeTodoDelete } from "../types/todo";
+import { getFieldsByTemplate } from "../utils";
 import clientPG from "../utils/utils.pg";
 
 export default {
@@ -25,30 +26,15 @@ export default {
   },
 
   editTodo: async (params: TypeTodoCreate) => {
-    let fields = "";
-
-    for (let field of ["status", "task_name", "comment", "index"]) {
-      const getChange = params?.[field as keyof typeof params];
-
-      if (typeof getChange === "number") {
-        fields += `${field}=${getChange},`;
-      }
-
-      if (typeof getChange === "string") {
-        fields += `${field}='${getChange}',`;
-      }
-    }
+    const fields = getFieldsByTemplate(params, [
+      "status",
+      "task_name",
+      "comment",
+      "index",
+    ]);
 
     // don't change anything
     if (!fields.length) return;
-
-    /* 
-      you needs substring because the last word don't allow ,
-      E.g:
-        task_name='hello world', index=0, // wrong
-        task_name='hello world', index=, // correct
-    */
-    fields = fields.substring(0, fields.length - 1);
 
     await clientPG.query(`UPDATE public.todo SET ${fields} WHERE id=$1`, [
       params.id,
