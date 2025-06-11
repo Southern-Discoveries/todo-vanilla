@@ -3,7 +3,7 @@ import utilsConstants from "../utils/utils.constants";
 import "./middleware";
 import spiner from "./components/spiner";
 import { catchProperties } from "../utils";
-import toast from "./components/toast";
+import { toastRender } from "./components/toast";
 
 $.ready(
   (function () {
@@ -74,20 +74,7 @@ $.ready(
           if (request.status !== 200) throw json.statusText;
 
           // handler toast
-          {
-            const toast_message = $(
-              toast({
-                id: "register_success",
-                message: json.statusText,
-              })
-            );
-
-            $("body").append(toast_message);
-
-            $("#close-register_success").on("click", () => {
-              toast_message.remove();
-            });
-          }
+          toastRender("you register successfuly");
 
           // reset form
           for (const element of inputText) {

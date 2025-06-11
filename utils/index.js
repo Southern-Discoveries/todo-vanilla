@@ -4,3 +4,7 @@ export const catchProperties = (obj) => {
     if (conditional) return key;
   }
 };
+
+export const RANDOM_CHARACTER = () => {
+  return (Math.random() + 1).toString(6).substring(7);
+};
