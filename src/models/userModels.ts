@@ -7,9 +7,10 @@ import { getFieldsByTemplate } from "../utils";
 import utilsConstants from "../utils/utils.constants";
 import clientPG from "../utils/utils.pg";
 import bcrypt from "bcrypt";
+import utilsJwt from "../utils/utils.jwt";
 
 export default {
-  getUser: async (id: string) => {
+  getUserById: async (id: string) => {
     const result = await clientPG.query<TypeUserGetProps>(
       `SELECT * FROM public.user WHERE username = $1`,
       [id]
@@ -59,11 +60,16 @@ export default {
       throw "the password incorrect, please check again";
     }
 
-    return {
+    const values = {
       username: result.rows[0].username,
       subname: result.rows[0].subname || result.rows[0].username,
       avatar: result.rows[0].avatar,
       createdAt: result.rows[0].createdAt,
+    };
+
+    return {
+      REFRESH_TOKEN: utilsJwt.generate(values, "refresh"),
+      ACCESS_TOKEN: utilsJwt.generate(values, "access"),
     };
   },
 
@@ -74,7 +80,7 @@ export default {
       "password",
     ]);
 
-    // // don't change anything
+    // don't change anything
     if (!fields.length) return;
 
     const result = await clientPG.query(
