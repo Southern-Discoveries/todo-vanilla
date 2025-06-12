@@ -1,6 +1,24 @@
 import $ from "jquery";
+import { RANDOM_CHARACTER } from "../../utils/index";
 
-export default (props) => {
+export const toastRender = (message) => {
+  const random = RANDOM_CHARACTER();
+
+  const toast_message = $(
+    toast({
+      id: random,
+      message,
+    })
+  );
+
+  $("body").append(toast_message);
+
+  $(`#close-${random}`).on("click", () => {
+    toast_message.remove();
+  });
+};
+
+const toast = (props) => {
   const containerID = props?.id ? `id="container-${props.id}"` : "";
   const closeID = props?.id ? `id="close-${props.id}"` : "";
 
@@ -31,3 +49,5 @@ export default (props) => {
           </button>
 </div>`;
 };
+
+export default toast;
