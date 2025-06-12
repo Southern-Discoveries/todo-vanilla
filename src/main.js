@@ -1,7 +1,21 @@
 import $ from "jquery";
-import "./middleware";
+import { fetchAccount } from "./middleware";
 
-$(document).ready(function () {
+$(document).ready(async function () {
+  //GET USER INFORMATION
+
+  //User info check when have no avatar
+  {
+    let getAccount = await fetchAccount();
+    $("#userName").text(getAccount.subname);
+
+    if (!getAccount.avatar) {
+      $("#userAvt").attr("src", "Icon/User.svg");
+    } else {
+      $("#userAvt").attr("src", getAccount.avatar);
+    }
+  }
+
   //Card info
 
   const date = new Date();
@@ -97,14 +111,4 @@ $(document).ready(function () {
   $("#createBtn").on("click", (event) => {
     addTask();
   });
-
-  //EDIT TEXT FEATURE
-
-  //Edit text
-
-  function editTask() {
-    const editHtml = `
-
-  `;
-  }
 });
