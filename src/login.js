@@ -62,9 +62,15 @@ $.ready(
 
           const json = await request.json();
 
-          if (request.status !== 200) throw json.statusText;
+          if (!request.ok) throw json.statusText;
 
-          localStorage.setItem(utilsConstants.STORAGE_ACCOUNT, json.username);
+          localStorage.setItem(utilsConstants.ACCESS_TOKEN, json.ACCESS_TOKEN);
+
+          localStorage.setItem(
+            utilsConstants.REFRESH_TOKEN,
+            json.REFRESH_TOKEN
+          );
+
           window.location = `/${utilsConstants.BASE_PATH}`;
         } catch (error) {
           inputError.removeAttr("hidden").text(error);
