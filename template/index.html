@@ -23,25 +23,30 @@
       form.append("username", "hello");
       form.append("file", ha.files[0]);
       console.log(ha.files[0]);
-
-
-      const api_key = "583412573719756";
-      const cloud_name = "synasapmob";
-
-      cloudinary.config({
-        cloud_name,
-        api_key,
-        api_secret: "t0MmxpT30AKW30LZtmP708TWl_4",
+      const req = await fetch(`${getURL.toString()}user/haha`, {
+        method: "POST",
+        body: form
       });
+      console.log(await req.json());
 
-      const timestamp = Math.round(Date.now() / 1000);
 
-      const signature = cloudinary.utils.api_sign_request(
-        {
-          timestamp,
-        },
-        "t0MmxpT30AKW30LZtmP708TWl_4"
-      );
+      // const api_key = "583412573719756";
+      // const cloud_name = "synasapmob";
+
+      // cloudinary.config({
+      //   cloud_name,
+      //   api_key,
+      //   api_secret: "t0MmxpT30AKW30LZtmP708TWl_4",
+      // });
+
+      // const timestamp = Math.round(Date.now() / 1000);
+
+      // const signature = cloudinary.utils.api_sign_request(
+      //   {
+      //     timestamp,
+      //   },
+      //   "t0MmxpT30AKW30LZtmP708TWl_4"
+      // );
 
 
       // const request_url_avatar = await fetch(`${getURL.toString()}user/edit-url-avatar`)
@@ -51,13 +56,7 @@
       //   method: "POST",
       //   body: form
       // })
-      const req = fetch(`${getURL.toString()}user/edit`, {
-        method: "PUT",
-        body: JSON.stringify({
-          username: "new",
-          // subname: ""
-        }),
-      });
+
     }
   })
   ha.addEventListener("click", () => {

@@ -68,7 +68,11 @@ export default {
   },
 
   editUser: async (params: TypeUserEditProps) => {
-    const fields = getFieldsByTemplate(params, ["subname", "avatar"]);
+    const fields = getFieldsByTemplate(params, [
+      "subname",
+      "avatar",
+      "password",
+    ]);
 
     // // don't change anything
     if (!fields.length) return;

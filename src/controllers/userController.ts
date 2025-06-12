@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { catchProperties } from "../utils";
 import userModels from "../models/userModels";
 import { TypeUserCreateProps, TypeUserEditProps } from "../types/user";
+import bcrypt from "bcrypt";
 
 export default {
   getUser: async (req: Request, res: Response) => {
@@ -66,8 +67,11 @@ export default {
 
       const isOmit = catchProperties({
         username: !params?.username,
-        subname: !params?.subname,
       });
+
+      if (params?.password) {
+        params.password = bcrypt.hashSync(params.password, 10);
+      }
 
       if (isOmit?.length) throw `required field ${isOmit}`;
 

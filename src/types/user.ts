@@ -13,6 +13,7 @@ export interface TypeUserGetProps {
 
 export interface TypeUserEditProps {
   username: string;
+  password: string;
   subname: string;
   avatar?: string;
 }
