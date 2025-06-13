@@ -17,3 +17,8 @@ export interface TypeUserEditProps {
   subname: string;
   avatar?: string;
 }
+
+export interface TypeUserJWTProps extends TypeUserGetProps {
+  iat: number;
+  exp: number;
+}

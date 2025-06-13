@@ -1,8 +1,21 @@
 import { TypeTodoCreate, TypeTodoDelete } from "../types/todo";
+import { TypeUserJWTProps } from "../types/user";
 import { getFieldsByTemplate } from "../utils";
+import utilsJwt from "../utils/utils.jwt";
 import clientPG from "../utils/utils.pg";
 
 export default {
+  getTodo: async (token: string) => {
+    const verify = utilsJwt.verify(token) as TypeUserJWTProps;
+
+    const result = await clientPG.query(
+      `SELECT id, creator, status, task_name, comment, index FROM public.todo WHERE creator=$1`,
+      [verify.username]
+    );
+
+    return result.rows;
+  },
+
   createTodo: async (params: TypeTodoCreate) => {
     await clientPG.query(
       `INSERT INTO public.todo(creator, status, task_name, comment, index) VALUES ($1, $2, $3, $4, $5)`,
@@ -39,14 +52,5 @@ export default {
     await clientPG.query(`UPDATE public.todo SET ${fields} WHERE id=$1`, [
       params.id,
     ]);
-  },
-
-  resetTodo: async (creator: string) => {
-    const result = await clientPG.query(
-      `DELETE FROM public.todo WHERE creator=$1`,
-      [creator]
-    );
-
-    if (!result.rowCount) throw "you don't have any task to reset";
   },
 };

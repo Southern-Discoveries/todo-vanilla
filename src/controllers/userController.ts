@@ -1,24 +1,16 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { catchProperties } from "../utils";
 import userModels from "../models/userModels";
-import { TypeUserCreateProps, TypeUserEditProps } from "../types/user";
+import {
+  TypeUserCreateProps,
+  TypeUserEditProps,
+  TypeUserJWTProps,
+} from "../types/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import utilsJwt from "../utils/utils.jwt";
 
 export default {
-  permission: async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.header("Authorization");
-
-    if (!token?.length) {
-      res.status(401).send({
-        statusText: "Access denied",
-      });
-    }
-
-    next();
-  },
-
   getUserById: async (req: Request, res: Response) => {
     try {
       const getProfile = await userModels.getUserById(req.params.id);
@@ -39,7 +31,7 @@ export default {
     try {
       const token = req.header("Authorization");
 
-      const verify = utilsJwt.verify(token as string);
+      const verify = utilsJwt.verify(token as string) as TypeUserJWTProps;
 
       res.send(verify);
     } catch (error: any) {

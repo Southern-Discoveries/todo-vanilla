@@ -1,5 +1,6 @@
-import jwt, { SignOptions } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import utilsConstants from "./utils.constants";
+import { NextFunction, Request, Response } from "express";
 
 const verify = (token: string) => {
   try {
@@ -33,7 +34,20 @@ const generate = (
   });
 };
 
+const permission = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.header("Authorization");
+
+  if (!token?.length) {
+    res.status(401).send({
+      statusText: "Access denied",
+    });
+  }
+
+  next();
+};
+
 export default {
   verify,
   generate,
+  permission,
 };

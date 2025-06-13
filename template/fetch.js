@@ -104,9 +104,25 @@ function parseJWT(token) {
 
   const req_login_json = await req_login.json();
 
-  console.log(new Date(parseJWT(req_login_json.REFRESH_TOKEN).exp * 1000));
-  console.log(new Date(parseJWT(req_login_json.ACCESS_TOKEN).exp * 1000));
-  console.log(new Date());
+  const req_getTodo = await fetch(`${getURL.toString()}todo/edit`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${req_login_json.ACCESS_TOKEN}`,
+    },
+    body: JSON.stringify({
+      id: 19,
+      // status: "progress",
+      task_name: "moi doi ne",
+    }),
+  });
+
+  const req_getTodo_json = await req_getTodo.json();
+  console.log(req_getTodo_json);
+
+  // console.log(new Date(parseJWT(req_login_json.REFRESH_TOKEN).exp * 1000));
+  // console.log(new Date(parseJWT(req_login_json.ACCESS_TOKEN).exp * 1000));
+  // console.log(new Date());
 
   // for (const [key, value] of Object.entries(req_login_json)) {
   //   console.log(value);
