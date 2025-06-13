@@ -28,7 +28,7 @@ const generate = (
       }
 
       if (type === "access") {
-        return "10s";
+        return "7d";
       }
     })(),
   });
