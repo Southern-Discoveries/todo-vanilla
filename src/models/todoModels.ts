@@ -18,13 +18,14 @@ export default {
 
   createTodo: async (params: TypeTodoCreate) => {
     await clientPG.query(
-      `INSERT INTO public.todo(creator, status, task_name, comment, index) VALUES ($1, $2, $3, $4, $5)`,
+      `INSERT INTO public.todo(creator, status, task_name, comment, index, "createdAt") VALUES ($1, $2, $3, $4, $5, $6)`,
       [
         params.creator,
         params.status,
         params.task_name,
         params?.comment || "",
         params?.index,
+        new Date().toUTCString(),
       ]
     );
   },
